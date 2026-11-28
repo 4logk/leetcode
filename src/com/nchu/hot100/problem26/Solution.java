@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 
 class Solution {
-    public List<Integer> findAnagrams(String s, String p) {
+/*    public List<Integer> findAnagrams(String s, String p) {
         ArrayList<Integer> ans = new ArrayList<>();
         char[] pCharArray = p.toCharArray();
         Arrays.sort(pCharArray);
@@ -26,6 +26,32 @@ class Solution {
                 ans.add(left);
             }
             left++;
+        }
+        return ans;
+    }*/
+
+    public List<Integer> findAnagrams(String s, String p) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        int sLength = s.length();
+        int pLength = p.length();
+        if(sLength < pLength) {
+            return new ArrayList<Integer>();
+        }
+        int[] sCount = new int[26];
+        int[] pCount = new int[26];
+        for(int i = 0;i < pLength;i++) {
+            sCount[s.charAt(i) - 'a']++;
+            pCount[p.charAt(i) - 'a']++;
+        }
+        if(Arrays.equals(sCount,pCount)) {
+            ans.add(0);
+        }
+        for(int i = 0;i < sLength - pLength;i++) {
+            sCount[s.charAt(i) - 'a']--;
+            sCount[s.charAt(i + pLength) - 'a']++;
+            if(Arrays.equals(sCount,pCount)) {
+                ans.add(i + 1);
+            }
         }
         return ans;
     }
